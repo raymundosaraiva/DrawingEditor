@@ -1,3 +1,5 @@
+package drawingeditor;
+
 
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
@@ -56,7 +58,6 @@ public class SideBar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ferramentas");
-        setPreferredSize(new java.awt.Dimension(230, 800));
 
         canvas1.setBackground(new java.awt.Color(51, 102, 255));
         canvas1.addMouseListener(new java.awt.event.MouseAdapter() {
