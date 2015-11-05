@@ -17,6 +17,7 @@ public class DrawingEditor {
     public static void main(String[] args) {
         Main main = new Main();
         main.setVisible(true);
+        main.setLocation(200, 100);
     }
     
 }
