@@ -1,16 +1,19 @@
 package drawingeditor;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author raymundosaraiva
  */
 public class Main extends javax.swing.JFrame {
+
+    private SideBar sideBar;
 
     /**
      * Creates new form NewJFrame
@@ -31,11 +34,21 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Editor de Desenhos");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jMenuBar2.setBackground(new java.awt.Color(204, 255, 204));
         jMenuBar2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -45,6 +58,25 @@ public class Main extends javax.swing.JFrame {
         });
 
         jMenu3.setText("File");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Janela de Ferramentas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Sair");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
         jMenuBar2.add(jMenu3);
 
         jMenu4.setText("Edit");
@@ -69,6 +101,31 @@ public class Main extends javax.swing.JFrame {
     private void jMenuBar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuBar2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuBar2MouseClicked
+
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        if (!sideBar.isVisible()) {
+            initFrames();
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Caro usuário a 'Janela de Ferramentas'\n já se encontra aberta",
+                    "Advertência", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,10 +167,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 
+    // métado que inicia o objeto SideBar.
     private void initFrames() {
-        SideBar sidebar = new SideBar();
-        sidebar.setVisible(true);
+        sideBar = new SideBar();
+        sideBar.setVisible(true);
     }
+
 }
+//transferFocus();  transfere o foco

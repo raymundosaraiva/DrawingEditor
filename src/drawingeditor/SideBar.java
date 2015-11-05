@@ -319,6 +319,7 @@ public class SideBar extends javax.swing.JFrame {
         // TODO add your handling code here:
         ColorPicker frame = new ColorPicker();
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }//GEN-LAST:event_jButton14ActionPerformed
 
