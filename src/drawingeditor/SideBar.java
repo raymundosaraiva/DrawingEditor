@@ -1,23 +1,27 @@
-package drawingeditor;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /** 
  *
  * @author raymundosaraiva
  */
-public class SideBar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SideBar
-     */
+package drawingeditor;
+
+import java.awt.Color;
+import javax.swing.JColorChooser;
+
+
+public class SideBar extends javax.swing.JFrame {
+    
+    Drawing draw;
+    Color currentColors[];
+    int currentStrokeWidth;
+    int currentTransparency;
+    boolean eraser = false;
+    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5;
+
     public SideBar() {
         initComponents();
-        setLocation(832, 100);
+        setLocation(900, 0);
+        draw = new Drawing();
     }
 
     /**
@@ -29,73 +33,88 @@ public class SideBar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        canvas1 = new java.awt.Canvas();
+        blue = new java.awt.Canvas();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        lineButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        canvas2 = new java.awt.Canvas();
-        jButton4 = new javax.swing.JButton();
+        rectButton = new javax.swing.JButton();
+        red = new java.awt.Canvas();
+        eraserButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        penButton = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        triangleButton = new javax.swing.JButton();
+        circleButton = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        canvas3 = new java.awt.Canvas();
-        canvas4 = new java.awt.Canvas();
-        canvas5 = new java.awt.Canvas();
-        canvas6 = new java.awt.Canvas();
+        green = new java.awt.Canvas();
+        black = new java.awt.Canvas();
+        white = new java.awt.Canvas();
+        yellow = new java.awt.Canvas();
+        stroke = new javax.swing.JSlider();
+        transparency = new javax.swing.JSlider();
+        canvas1 = new java.awt.Canvas();
+        jLabel2 = new javax.swing.JLabel();
+        strokeButton = new javax.swing.JButton();
+        fillButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Janela de Ferramentas");
+        setBackground(java.awt.Color.white);
+        setPreferredSize(new java.awt.Dimension(247, 600));
         setResizable(false);
 
-        canvas1.setBackground(new java.awt.Color(51, 102, 255));
-        canvas1.addMouseListener(new java.awt.event.MouseAdapter() {
+        blue.setBackground(new java.awt.Color(51, 102, 255));
+        blue.setFocusable(false);
+        blue.setName(""); // NOI18N
+        blue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas1MouseClicked(evt);
+                blueMouseClicked(evt);
             }
         });
 
         jToolBar1.setRollover(true);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line.png"))); // NOI18N
-        jButton1.setToolTipText("Linha");
+        lineButton.setBackground(new java.awt.Color(255, 255, 255));
+        lineButton.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        lineButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line.png"))); // NOI18N
+        lineButton.setToolTipText("Linha");
+        lineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lineButtonActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pen tool.png"))); // NOI18N
         jButton2.setToolTipText("Caneta");
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle tool.png"))); // NOI18N
-        jButton3.setToolTipText("Retângulo");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        rectButton.setBackground(new java.awt.Color(255, 255, 255));
+        rectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle tool.png"))); // NOI18N
+        rectButton.setToolTipText("Retângulo");
+        rectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                rectButtonActionPerformed(evt);
             }
         });
 
-        canvas2.setBackground(new java.awt.Color(255, 51, 51));
-        canvas2.addMouseListener(new java.awt.event.MouseAdapter() {
+        red.setBackground(new java.awt.Color(255, 51, 51));
+        red.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas2MouseClicked(evt);
+                redMouseClicked(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eraser.png"))); // NOI18N
-        jButton4.setToolTipText("Borracha");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        eraserButton.setBackground(new java.awt.Color(255, 255, 255));
+        eraserButton.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
+        eraserButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eraser.png"))); // NOI18N
+        eraserButton.setToolTipText("Borracha");
+        eraserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                eraserButtonActionPerformed(evt);
             }
         });
 
@@ -113,12 +132,12 @@ public class SideBar extends javax.swing.JFrame {
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3d material drop tool.png"))); // NOI18N
         jButton7.setToolTipText("Balde de Tinta");
 
-        jButton8.setBackground(new java.awt.Color(255, 255, 255));
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Brush tool.png"))); // NOI18N
-        jButton8.setToolTipText("Pincel");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        penButton.setBackground(new java.awt.Color(255, 255, 255));
+        penButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Brush tool.png"))); // NOI18N
+        penButton.setToolTipText("Pincel");
+        penButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                penButtonActionPerformed(evt);
             }
         });
 
@@ -126,51 +145,93 @@ public class SideBar extends javax.swing.JFrame {
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eyedropper.png"))); // NOI18N
         jButton9.setToolTipText("Absorver Cor");
 
-        jButton10.setBackground(new java.awt.Color(255, 255, 255));
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sharpen tool.png"))); // NOI18N
-        jButton10.setToolTipText("Triângulo");
+        triangleButton.setBackground(new java.awt.Color(255, 255, 255));
+        triangleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sharpen tool.png"))); // NOI18N
+        triangleButton.setToolTipText("Triângulo");
+        triangleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                triangleButtonActionPerformed(evt);
+            }
+        });
 
-        jButton11.setBackground(java.awt.Color.white);
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Circle.png"))); // NOI18N
-        jButton11.setToolTipText("Círculo");
+        circleButton.setBackground(java.awt.Color.white);
+        circleButton.setForeground(new java.awt.Color(255, 255, 255));
+        circleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Circle.png"))); // NOI18N
+        circleButton.setToolTipText("Círculo");
+        circleButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                circleButtonMouseClicked(evt);
+            }
+        });
 
         jButton12.setBackground(new java.awt.Color(255, 255, 255));
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Horizontal type tool.png"))); // NOI18N
         jButton12.setToolTipText("Texto");
 
-        jButton14.setText("Mais Cores");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        jButton14.setToolTipText("");
+        jButton14.setEnabled(false);
+
+        green.setBackground(new java.awt.Color(0, 255, 0));
+        green.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                greenMouseClicked(evt);
+            }
+        });
+
+        black.setBackground(new java.awt.Color(0, 51, 51));
+        black.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                blackMouseClicked(evt);
+            }
+        });
+
+        white.setBackground(new java.awt.Color(255, 255, 255));
+        white.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                whiteMouseClicked(evt);
+            }
+        });
+
+        yellow.setBackground(new java.awt.Color(255, 255, 102));
+        yellow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                yellowMouseClicked(evt);
+            }
+        });
+
+        stroke.setMaximum(20);
+        stroke.setMinimum(1);
+        stroke.setToolTipText("Espessura da Linha");
+        stroke.setValue(1);
+        stroke.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                strokeStateChanged(evt);
+            }
+        });
+
+        transparency.setMaximum(99);
+        transparency.setMinimum(1);
+        transparency.setToolTipText("Transparência");
+        transparency.setValue(99);
+        transparency.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                transparencyStateChanged(evt);
+            }
+        });
+
+        strokeButton.setBackground(new java.awt.Color(0, 0, 0));
+        strokeButton.setToolTipText("Cor da Borda");
+        strokeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                strokeButtonActionPerformed(evt);
             }
         });
 
-        canvas3.setBackground(new java.awt.Color(0, 255, 0));
-        canvas3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas3MouseClicked(evt);
-            }
-        });
-
-        canvas4.setBackground(new java.awt.Color(0, 51, 51));
-        canvas4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas4MouseClicked(evt);
-            }
-        });
-
-        canvas5.setBackground(new java.awt.Color(255, 255, 255));
-        canvas5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas5MouseClicked(evt);
-            }
-        });
-
-        canvas6.setBackground(new java.awt.Color(255, 255, 102));
-        canvas6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                canvas6MouseClicked(evt);
+        fillButton.setBackground(new java.awt.Color(0, 0, 0));
+        fillButton.setToolTipText("Cor de Preenchimento");
+        fillButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fillButtonActionPerformed(evt);
             }
         });
 
@@ -188,140 +249,198 @@ public class SideBar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(penButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lineButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(triangleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(circleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(eraserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 14, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(canvas3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(canvas4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(canvas5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(canvas6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(blue, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(red, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(green, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(40, 40, 40)
+                                        .addComponent(strokeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fillButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(black, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(white, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stroke, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(transparency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 19, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton11)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton3)
-                        .addComponent(jButton1)
-                        .addComponent(jButton10)))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(circleButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rectButton)
+                            .addComponent(triangleButton)))
+                    .addComponent(penButton))
                 .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton6)
-                        .addComponent(jButton5))
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton6)
+                            .addComponent(jButton5))
+                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(lineButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jButton2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton4)
+                            .addComponent(eraserButton)
                             .addComponent(jButton12)))
                     .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(canvas5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(canvas6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(canvas3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(canvas4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(stroke, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(transparency, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fillButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(strokeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(white, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(green, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(red, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blue, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(black, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(jButton14)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void canvas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas1MouseClicked
+    private void blueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blueMouseClicked
+       setColor(Color.BLUE, Color.BLUE);
+    }//GEN-LAST:event_blueMouseClicked
 
-    private void canvas2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas2MouseClicked
+    private void redMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_redMouseClicked
+       setColor(Color.RED, Color.RED);
+    }//GEN-LAST:event_redMouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void eraserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraserButtonActionPerformed
+        currentColors = getColor();
+        currentStrokeWidth = stroke.getValue();
+        currentTransparency = transparency.getValue();
+        setColor(Color.WHITE, Color.WHITE);
+        stroke.setValue(20);
+        transparency.setValue(99);
+        eraser = true;
+        draw.currentAction = PEN;
+    }//GEN-LAST:event_eraserButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void rectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rectButtonActionPerformed
+        currentColor();
+        draw.currentAction = RECT;
+    }//GEN-LAST:event_rectButtonActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void penButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_penButtonActionPerformed
+        currentColor();
+        draw.currentAction = PEN;
+    }//GEN-LAST:event_penButtonActionPerformed
 
-    private void canvas3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas3MouseClicked
+    private void greenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_greenMouseClicked
+        setColor(Color.GREEN, Color.GREEN);
+    }//GEN-LAST:event_greenMouseClicked
 
-    private void canvas4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas4MouseClicked
+    private void blackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackMouseClicked
+       setColor(Color.BLACK, Color.BLACK);
+    }//GEN-LAST:event_blackMouseClicked
 
-    private void canvas5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas5MouseClicked
+    private void whiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_whiteMouseClicked
+       setColor(Color.WHITE, Color.WHITE);
+    }//GEN-LAST:event_whiteMouseClicked
 
-    private void canvas6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvas6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_canvas6MouseClicked
+    private void yellowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yellowMouseClicked
+        setColor(Color.YELLOW, Color.YELLOW);
+    }//GEN-LAST:event_yellowMouseClicked
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-        ColorPicker frame = new ColorPicker();
-        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }//GEN-LAST:event_jButton14ActionPerformed
+    private void lineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineButtonActionPerformed
+        currentColor();
+        draw.currentAction = LINE;
+    }//GEN-LAST:event_lineButtonActionPerformed
+
+    private void strokeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_strokeStateChanged
+        draw.strokeWidth = stroke.getValue();
+    }//GEN-LAST:event_strokeStateChanged
+
+    private void circleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_circleButtonMouseClicked
+        draw.currentAction = CIRCLE;
+    }//GEN-LAST:event_circleButtonMouseClicked
+
+    private void transparencyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_transparencyStateChanged
+        draw.transparentVal = (float) (transparency.getValue() * .01);
+    }//GEN-LAST:event_transparencyStateChanged
+
+    private void strokeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strokeButtonActionPerformed
+        draw.strokeColor = JColorChooser.showDialog(null,  "Pick a Stroke", draw.strokeColor);
+        strokeButton.setBackground(draw.strokeColor);
+        
+    }//GEN-LAST:event_strokeButtonActionPerformed
+
+    private void fillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillButtonActionPerformed
+        draw.fillColor = JColorChooser.showDialog(null,  "Pick a Stroke", draw.fillColor);
+        fillButton.setBackground(draw.fillColor);
+    }//GEN-LAST:event_fillButtonActionPerformed
+
+    private void triangleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_triangleButtonActionPerformed
+        draw.currentAction = TRIANGLE;
+    }//GEN-LAST:event_triangleButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,29 +475,58 @@ public class SideBar extends javax.swing.JFrame {
                 new SideBar().setVisible(true);
             }
         });
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Canvas black;
+    private java.awt.Canvas blue;
     private java.awt.Canvas canvas1;
-    private java.awt.Canvas canvas2;
-    private java.awt.Canvas canvas3;
-    private java.awt.Canvas canvas4;
-    private java.awt.Canvas canvas5;
-    private java.awt.Canvas canvas6;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
+    private javax.swing.JButton circleButton;
+    private javax.swing.JButton eraserButton;
+    private javax.swing.JButton fillButton;
+    private java.awt.Canvas green;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton lineButton;
+    private javax.swing.JButton penButton;
+    private javax.swing.JButton rectButton;
+    private java.awt.Canvas red;
+    private javax.swing.JSlider stroke;
+    private javax.swing.JButton strokeButton;
+    private javax.swing.JSlider transparency;
+    private javax.swing.JButton triangleButton;
+    private java.awt.Canvas white;
+    private java.awt.Canvas yellow;
     // End of variables declaration//GEN-END:variables
+
+    public void setColor(Color stroke, Color fill){
+        draw.strokeColor = stroke;
+        draw.fillColor = fill;
+        strokeButton.setBackground(stroke);
+        fillButton.setBackground(fill);
+    }
+    
+    public Color[] getColor(){
+        Color colors[] = {draw.strokeColor, draw.fillColor};
+        return colors;
+    }
+    
+    public void currentColor(){
+        if(eraser){
+           setColor(currentColors[0],currentColors[1]);
+           stroke.setValue(currentStrokeWidth);
+           transparency.setValue(currentTransparency);
+           eraser = false;
+        }
+    }
 }
