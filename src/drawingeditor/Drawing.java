@@ -16,7 +16,9 @@ import java.util.*;
 public class Drawing extends JFrame
 {
     public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5;
-              
+    
+    boolean focus = false;
+    
     // Makes sure the float for transparency only shows 2 digits
     DecimalFormat dec = new DecimalFormat("#.##");
 		
@@ -37,58 +39,10 @@ public class Drawing extends JFrame
 
     public Drawing()
     {
-        // Define the defaults for the JFrame
         this.setSize(900, 600);
-        this.setTitle("Editor de Imagens");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         this.getContentPane().setBackground(Color.WHITE);
             
-            // Creates a menubar for a JFrame
-        JMenuBar menuBar = new JMenuBar();
-         
-        // Add the menubar to the frame
-        setJMenuBar(menuBar);
-         
-        // Define and add two drop down menu to the menubar
-        JMenu fileMenu = new JMenu("Arquivo");
-        JMenu editMenu = new JMenu("Editar");
-        JMenu windowMenu = new JMenu("Janela");
-        JMenu aboutMenu = new JMenu("Sobre");
-        menuBar.add(fileMenu);
-        menuBar.add(editMenu);
-        menuBar.add(windowMenu);
-        menuBar.add(aboutMenu);
-         
-        // Create and add simple menu item to one of the drop down menu
-        JMenuItem newAction = new JMenuItem("Novo");
-        JMenuItem openAction = new JMenuItem("Abrir");
-        JMenuItem saveAction = new JMenuItem("Salvar");
-        JMenuItem exitAction = new JMenuItem("Sair");
-        JMenuItem clearAction = new JMenuItem("Limpar");
-         
-        // Create and add CheckButton as a menu item to one of the drop down
-        // menu
-        JCheckBoxMenuItem paintWindow = new JCheckBoxMenuItem("Editor de Imagens");
-        JCheckBoxMenuItem toolsWindow = new JCheckBoxMenuItem("Janela de Ferramentas");
-        
-        fileMenu.add(newAction);
-        fileMenu.add(openAction);
-        fileMenu.add(saveAction);
-        fileMenu.addSeparator();
-        fileMenu.add(exitAction);
-        editMenu.add(clearAction);
-        windowMenu.add(paintWindow);
-        windowMenu.add(toolsWindow);
-        
-        paintWindow.setState(true);
-        toolsWindow.setState(true);
-        
-        clearAction.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               // Clear the whole Frame
-                
-            }
-        });
         // Make the drawing area take up the rest of the frame  
         this.add(new DrawingBoard(), BorderLayout.CENTER);
         
@@ -220,28 +174,21 @@ public class Drawing extends JFrame
                           }
                         } );
                 }
-                
 
                 public void paint(Graphics g)
                 {
-                		// Class used to define the shapes to be drawn
-                	
+                	// Class used to define the shapes to be drawn
                         graphSettings = (Graphics2D)g;
 
                         // Antialiasing cleans up the jagged lines and defines rendering rules
-                        
                         graphSettings.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                                 RenderingHints.VALUE_ANTIALIAS_ON);
-                        
-                       
-                        
 
                         // Iterators created to cycle through strokes and fills
                         Iterator<Color> strokeCounter = shapeStroke.iterator();
                         Iterator<Color> fillCounter = shapeFill.iterator();
                         
                         // Iterator for transparency
-                        
                         Iterator<Float> transCounter = transPercent.iterator();
                         
                         Iterator<Integer> StrokeWidthCounter = strokeVal.iterator();
@@ -249,24 +196,22 @@ public class Drawing extends JFrame
                         for (Shape s : shapes)
                         {
                         	
-                        	// Sets the shapes transparency value
-                            
+                            // Sets the shapes transparency value
                             graphSettings.setComposite(AlphaComposite.getInstance(
-                                    AlphaComposite.SRC_OVER, transCounter.next()));
+                            AlphaComposite.SRC_OVER, transCounter.next()));
                             
                              // Defines the line width of the stroke
-                        
                             graphSettings.setStroke(new BasicStroke(StrokeWidthCounter.next()));
                         	
-                        	// Grabs the next stroke from the color arraylist
-                        	graphSettings.setPaint(strokeCounter.next());
+                            // Grabs the next stroke from the color arraylist
+                            graphSettings.setPaint(strokeCounter.next());
                         	
-                        	graphSettings.draw(s);
+                            graphSettings.draw(s);
                         	
-                        	// Grabs the next fill from the color arraylist
-                        	graphSettings.setPaint(fillCounter.next());
+                            // Grabs the next fill from the color arraylist
+                            graphSettings.setPaint(fillCounter.next());
                         	
-                        	graphSettings.fill(s);
+                            graphSettings.fill(s);
                         }
 
                         // Guide shape used for drawing
