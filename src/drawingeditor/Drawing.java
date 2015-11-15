@@ -9,8 +9,13 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.*;
+import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 public class Drawing extends JFrame
@@ -303,5 +308,45 @@ public class Drawing extends JFrame
                 }
 
         }
+    
+    public void getImage(){
+            BufferedImage image = new BufferedImage(getContentPane().getWidth(), 
+                    getContentPane().getHeight(), BufferedImage.TYPE_INT_RGB);
+            JFileChooser jFile = new JFileChooser();
+            jFile.showSaveDialog(null);
+            Path pth = jFile.getSelectedFile().toPath();
+            JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+            try {
+                Graphics2D g = image.createGraphics();
+                g.drawImage(image, 0, 0, null);
+                paint(g);
+                ImageIO.write(image, "png", new File(pth.toString() + ".png"));
+
+            } catch (IOException ox) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar a Imagem!");
+            }
+    }
+    
+    public void open(){
+        JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setVisible(true);
+                int returnValue = fileChooser.showOpenDialog(null);
+                File f = fileChooser.getSelectedFile();
+                try {
+                    Image image = ImageIO.read(f);
+
+                    // Ver qual o nome do modal par colocar a imagem.
+                    JLabel label = new JLabel("",JLabel.CENTER);
+                    label.setBounds(0, 0, 900, 600);
+                    label.setVisible(true);
+                    label.setIcon(new ImageIcon(image));
+                    
+                    getContentPane().add(label);
+                    repaint();
+
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro. Arquivo não contém uma imagem!");
+                }
+    }
            
 }

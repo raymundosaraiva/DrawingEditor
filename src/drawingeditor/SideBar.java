@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
@@ -59,6 +58,17 @@ public class SideBar extends javax.swing.JFrame {
         setLocation(900, 0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newDraw();
+        
+        
+        saveMenu.addActionListener((e) -> {
+            currentDraw.getImage();
+        });
+        
+        openMenu.addActionListener((e) -> {
+            if (e != null) {
+                currentDraw.open();
+            }
+        });
     }
     
     /**
@@ -110,7 +120,6 @@ public class SideBar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Janela de Ferramentas");
         setBackground(java.awt.Color.white);
-        setPreferredSize(new java.awt.Dimension(247, 600));
         setResizable(false);
 
         blue.setBackground(new java.awt.Color(51, 102, 255));
