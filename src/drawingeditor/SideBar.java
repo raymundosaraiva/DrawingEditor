@@ -577,7 +577,7 @@ public final class SideBar extends javax.swing.JFrame {
         // Cria formulario
         JFrame formulario = new JFrame("DA - JTextArea");
 
-        formulario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        formulario.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Cria nova instancia da classe
         Texto texto = new Texto();
