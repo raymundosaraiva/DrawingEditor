@@ -1,8 +1,7 @@
-/** 
+/**
  *
  * @author raymundosaraiva
  */
-
 package drawingeditor;
 
 import java.awt.AWTException;
@@ -15,9 +14,8 @@ import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
-
 public class SideBar extends javax.swing.JFrame {
-    
+
     ArrayList<Drawing> drawList = new ArrayList<>();
     Drawing currentDraw;
     Color currentColors[];
@@ -25,32 +23,32 @@ public class SideBar extends javax.swing.JFrame {
     int currentTransparency;
     boolean eraser = false;
     public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6;
-    
+
     public SideBar() {
         initComponents();
         setLocation(900, 0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newDraw();
-        
+
         // Save th current draw to a png file
         saveMenu.addActionListener((e) -> {
             currentDraw.getImage();
         });
-        
+
         // Open a new image from file
         openMenu.addActionListener((e) -> {
             if (e != null) {
                 currentDraw.open();
             }
         });
-        
+
         clearMenu.addActionListener((e) -> {
             if (e != null) {
                 currentDraw.clear();
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -456,11 +454,11 @@ public class SideBar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void blueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blueMouseClicked
-       setColor(Color.BLUE, Color.BLUE);
+        setColor(Color.BLUE, Color.BLUE);
     }//GEN-LAST:event_blueMouseClicked
 
     private void redMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_redMouseClicked
-       setColor(Color.RED, Color.RED);
+        setColor(Color.RED, Color.RED);
     }//GEN-LAST:event_redMouseClicked
 
     private void eraserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraserButtonActionPerformed
@@ -489,11 +487,11 @@ public class SideBar extends javax.swing.JFrame {
     }//GEN-LAST:event_greenMouseClicked
 
     private void blackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackMouseClicked
-       setColor(Color.BLACK, Color.BLACK);
+        setColor(Color.BLACK, Color.BLACK);
     }//GEN-LAST:event_blackMouseClicked
 
     private void whiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_whiteMouseClicked
-       setColor(Color.WHITE, Color.WHITE);
+        setColor(Color.WHITE, Color.WHITE);
     }//GEN-LAST:event_whiteMouseClicked
 
     private void yellowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_yellowMouseClicked
@@ -506,7 +504,9 @@ public class SideBar extends javax.swing.JFrame {
     }//GEN-LAST:event_lineButtonActionPerformed
 
     private void strokeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_strokeStateChanged
-        currentDraw.strokeWidth = stroke.getValue();
+        if (currentDraw != null) {
+            currentDraw.strokeWidth = stroke.getValue();
+        }
     }//GEN-LAST:event_strokeStateChanged
 
     private void circleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_circleButtonMouseClicked
@@ -514,18 +514,23 @@ public class SideBar extends javax.swing.JFrame {
     }//GEN-LAST:event_circleButtonMouseClicked
 
     private void transparencyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_transparencyStateChanged
-        currentDraw.transparentVal = (float) (transparency.getValue() * .01);
+        if (currentDraw != null) {
+            currentDraw.transparentVal = (float) (transparency.getValue() * .01);
+        }
     }//GEN-LAST:event_transparencyStateChanged
 
     private void strokeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strokeButtonActionPerformed
-        currentDraw.strokeColor = JColorChooser.showDialog(null,  "Pick a Stroke", currentDraw.strokeColor);
-        strokeButton.setBackground(currentDraw.strokeColor);
-        
+        if (currentDraw != null) {
+            currentDraw.strokeColor = JColorChooser.showDialog(null, "Pick a Stroke", currentDraw.strokeColor);
+            strokeButton.setBackground(currentDraw.strokeColor);
+        }
     }//GEN-LAST:event_strokeButtonActionPerformed
 
     private void fillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fillButtonActionPerformed
-        currentDraw.fillColor = JColorChooser.showDialog(null,  "Pick a Stroke", currentDraw.fillColor);
-        fillButton.setBackground(currentDraw.fillColor);
+        if (currentDraw != null) {
+            currentDraw.fillColor = JColorChooser.showDialog(null, "Pick a Stroke", currentDraw.fillColor);
+            fillButton.setBackground(currentDraw.fillColor);
+        }
     }//GEN-LAST:event_fillButtonActionPerformed
 
     private void triangleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_triangleButtonActionPerformed
@@ -537,19 +542,19 @@ public class SideBar extends javax.swing.JFrame {
     }//GEN-LAST:event_clearMenuActionPerformed
 
     private void newMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuActionPerformed
-       newDraw();
+        newDraw();
     }//GEN-LAST:event_newMenuActionPerformed
 
     private void paintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paintButtonActionPerformed
 
-           
+
     }//GEN-LAST:event_paintButtonActionPerformed
 
     private void absorbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_absorbButtonActionPerformed
-       setAction(ABSORB);
+        setAction(ABSORB);
         Color color;
         try {
-            color = currentDraw.getPixelColor(200,200);
+            color = currentDraw.getPixelColor(200, 200);
             setColor(color, color);
         } catch (AWTException ex) {
             Logger.getLogger(SideBar.class.getName()).log(Level.SEVERE, null, ex);
@@ -589,8 +594,7 @@ public class SideBar extends javax.swing.JFrame {
                 new SideBar().setVisible(true);
             }
         });
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -631,67 +635,72 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JMenu windowMenu;
     private java.awt.Canvas yellow;
     // End of variables declaration//GEN-END:variables
-    
+
     // Set the color in the draw
-    public void setColor(Color stroke, Color fill){
-        currentDraw.strokeColor = stroke;
-        currentDraw.fillColor = fill;
-        strokeButton.setBackground(stroke);
-        fillButton.setBackground(fill);
+    public void setColor(Color stroke, Color fill) {
+        if (currentDraw != null) {
+            currentDraw.strokeColor = stroke;
+            currentDraw.fillColor = fill;
+            strokeButton.setBackground(stroke);
+            fillButton.setBackground(fill);
+        }
     }
-    
+
     // Get the Color from the draw
-    public Color[] getColor(){
+    public Color[] getColor() {
         Color colors[] = {currentDraw.strokeColor, currentDraw.fillColor};
         return colors;
     }
-    
+
     // Get the current color, stroke and transparency, before Eraser was called
-    public void currentColor(){
-        if(eraser){
-           setColor(currentColors[0],currentColors[1]);
-           stroke.setValue(currentStrokeWidth);
-           transparency.setValue(currentTransparency);
-           eraser = false;
+    public void currentColor() {
+        if (eraser) {
+            setColor(currentColors[0], currentColors[1]);
+            stroke.setValue(currentStrokeWidth);
+            transparency.setValue(currentTransparency);
+            eraser = false;
         }
     }
-    
+
     // Set the current action selected
     private void setAction(int ACTION) {
-        currentDraw.currentAction = ACTION;
+        if (currentDraw != null) {
+            currentDraw.currentAction = ACTION;
+        }
     }
-    
-     // Method to create new Drawing windows
-    public void newDraw(){
+
+    // Method to create new Drawing windows
+    public void newDraw() {
         Drawing draw = new Drawing();
         int index = drawList.size();
-        
+
         // A listener to indicate whitch window has the focus, so they can be treated as separated 
         draw.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
-                currentDraw = draw;
-                System.out.println("Focus gained in JPanel");
+                if (evt != null) {
+                    currentDraw = draw;
+                    System.out.println("Focus gained in JPanel");
+                }
             }
         });
-        
-        draw.setTitle("Sem Título "+(index+1)); // Add a untitled name to each new window
-        
+
+        draw.setTitle("Sem Título " + (index + 1)); // Add a untitled name to each new window
+
         //Add new draw to menu Janela
         //windowMenu.add(new JCheckBoxMenuItem(draw.getTitle()));
-        
         draw.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        draw.addWindowListener( new WindowAdapter() {
-                    public void windowClosing(WindowEvent we) {
-                        //Remove
-                        drawList.remove(index);
-                        //remove draw from menu Janela
-                        draw.dispose();
-                    }
-                } );
+        draw.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                //Remove
+                drawList.remove(index);
+                //remove draw from menu Janela
+                draw.dispose();
+            }
+        });
         // Add new draw to the list
         drawList.add(draw);
-        
+
     }
-    
+
 }
