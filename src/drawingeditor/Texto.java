@@ -58,14 +58,14 @@ class Texto {
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
         // Tamanho da barra
-        scrooll.setPreferredSize(new Dimension(250, 250));
+        scrooll.setPreferredSize(new Dimension(470, 270));
          
         // Borda com titulo
         scrooll.setBorder(
             BorderFactory.createCompoundBorder(
                 BorderFactory.createCompoundBorder(
                                 BorderFactory.createTitledBorder("Caixa de Texto"),
-                                BorderFactory.createEmptyBorder(5,5,5,5)),
+                                BorderFactory.createEmptyBorder(10,10,10,10)),
                                 scrooll.getBorder()));
          
          
@@ -74,7 +74,7 @@ class Texto {
          
         // Cria um layout para os componentes
         painel.setLayout(new BoxLayout(painel,BoxLayout.PAGE_AXIS));
-        painel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        painel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
          
         // Alinha componentes
         rotulo.setAlignmentX(Component.CENTER_ALIGNMENT);

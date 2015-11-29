@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
-public class SideBar extends javax.swing.JFrame {
+public final class SideBar extends javax.swing.JFrame {
 
     ArrayList<Drawing> drawList = new ArrayList<>();
     Drawing currentDraw;
@@ -74,7 +74,7 @@ public class SideBar extends javax.swing.JFrame {
         absorbButton = new javax.swing.JButton();
         triangleButton = new javax.swing.JButton();
         circleButton = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        jb_CaiXaDeTexto = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         green = new java.awt.Canvas();
@@ -212,12 +212,12 @@ public class SideBar extends javax.swing.JFrame {
             }
         });
 
-        jButton12.setBackground(new java.awt.Color(255, 255, 255));
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Horizontal type tool.png"))); // NOI18N
-        jButton12.setToolTipText("Texto");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jb_CaiXaDeTexto.setBackground(new java.awt.Color(255, 255, 255));
+        jb_CaiXaDeTexto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Horizontal type tool.png"))); // NOI18N
+        jb_CaiXaDeTexto.setToolTipText("Texto");
+        jb_CaiXaDeTexto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jb_CaiXaDeTextoActionPerformed(evt);
             }
         });
 
@@ -367,7 +367,7 @@ public class SideBar extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(eraserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jb_CaiXaDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(absorbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -431,7 +431,7 @@ public class SideBar extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(eraserButton)
-                            .addComponent(jButton12)))
+                            .addComponent(jb_CaiXaDeTexto)))
                     .addComponent(absorbButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -573,7 +573,7 @@ public class SideBar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_absorbButtonActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void jb_CaiXaDeTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CaiXaDeTextoActionPerformed
         // Cria formulario
         JFrame formulario = new JFrame("DA - JTextArea");
 
@@ -590,7 +590,7 @@ public class SideBar extends javax.swing.JFrame {
 
         // Mostra formulario
         formulario.setVisible(true);
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_jb_CaiXaDeTextoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -620,10 +620,8 @@ public class SideBar extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SideBar().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SideBar().setVisible(true);
         });
 
     }
@@ -638,7 +636,6 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JButton eraserButton;
     private javax.swing.JButton fillButton;
     private java.awt.Canvas green;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
@@ -652,6 +649,7 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton jb_CaiXaDeTexto;
     private javax.swing.JButton lineButton;
     private javax.swing.JMenuItem newMenu;
     private javax.swing.JMenuItem openMenu;
@@ -724,6 +722,7 @@ public class SideBar extends javax.swing.JFrame {
         //windowMenu.add(new JCheckBoxMenuItem(draw.getTitle()));
         draw.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         draw.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent we) {
                 //Remove
                 drawList.remove(index);
