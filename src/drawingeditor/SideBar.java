@@ -58,6 +58,8 @@ public class SideBar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         blue = new java.awt.Canvas();
         jToolBar1 = new javax.swing.JToolBar();
         lineButton = new javax.swing.JButton();
@@ -95,13 +97,16 @@ public class SideBar extends javax.swing.JFrame {
         windowMenu = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Janela de Ferramentas");
         setBackground(java.awt.Color.white);
         setResizable(false);
 
         blue.setBackground(new java.awt.Color(51, 102, 255));
-        blue.setFocusable(false);
         blue.setName(""); // NOI18N
         blue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -210,6 +215,11 @@ public class SideBar extends javax.swing.JFrame {
         jButton12.setBackground(new java.awt.Color(255, 255, 255));
         jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Horizontal type tool.png"))); // NOI18N
         jButton12.setToolTipText("Texto");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
 
         jButton14.setToolTipText("");
         jButton14.setEnabled(false);
@@ -422,7 +432,7 @@ public class SideBar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(eraserButton)
                             .addComponent(jButton12)))
-                    .addComponent(absorbButton))
+                    .addComponent(absorbButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -444,9 +454,9 @@ public class SideBar extends javax.swing.JFrame {
                     .addComponent(blue, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(black, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
                 .addComponent(jButton14)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -554,12 +564,33 @@ public class SideBar extends javax.swing.JFrame {
         setAction(ABSORB);
         Color color;
         try {
-            color = currentDraw.getPixelColor(200, 200);
-            setColor(color, color);
+            if (currentDraw != null) {
+                color = currentDraw.getPixelColor(200, 200);
+                setColor(color, color);
+            }
         } catch (AWTException ex) {
             Logger.getLogger(SideBar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_absorbButtonActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        // Cria formulario
+        JFrame formulario = new JFrame("DA - JTextArea");
+
+        formulario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Cria nova instancia da classe
+        Texto texto = new Texto();
+
+        // adiciona painel ao formulario
+        formulario.setContentPane(texto.CriaPainel());
+
+        // Compacta componetes no formulario
+        formulario.pack();
+
+        // Mostra formulario
+        formulario.setVisible(true);
+    }//GEN-LAST:event_jButton12ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -617,7 +648,9 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton lineButton;
     private javax.swing.JMenuItem newMenu;
@@ -702,5 +735,4 @@ public class SideBar extends javax.swing.JFrame {
         drawList.add(draw);
 
     }
-
 }
