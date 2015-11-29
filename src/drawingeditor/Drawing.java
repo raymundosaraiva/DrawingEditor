@@ -24,10 +24,20 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class Drawing extends JFrame {
 
-    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6;
+    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6, TEXT = 7;
 
     // Know if this draw's been used (has the focus)
     boolean focus = false;
+    
+    String text = "Vazio";
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     Point mouseClick;
 
@@ -71,6 +81,8 @@ public class Drawing extends JFrame {
         ArrayList<Color> shapeStroke = new ArrayList<Color>();
         ArrayList<Float> transPercent = new ArrayList<Float>();
         ArrayList<Integer> strokeVal = new ArrayList<Integer>();
+        ArrayList<String> texts = new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
 
         Point drawStart, drawEnd;
 
@@ -79,6 +91,13 @@ public class Drawing extends JFrame {
 
             this.addMouseListener(new MouseAdapter() {
 
+                public void mouseClicked(MouseEvent e) {
+                    Point point = new Point(e.getX(), e.getY());
+                    texts.add(text);
+                    points.add(point);
+                            
+                }
+                
                 public void mousePressed(MouseEvent e) {
 
                     if (currentAction == PEN) {
@@ -104,7 +123,7 @@ public class Drawing extends JFrame {
 
                 public void mouseReleased(MouseEvent e) {
 
-                    if (currentAction != PEN && currentAction != ABSORB) {
+                    if (currentAction != PEN && currentAction != ABSORB && currentAction != TEXT) {
 
                             	  // Create a shape using the starting x & y
                         // and finishing x & y positions
@@ -193,7 +212,15 @@ public class Drawing extends JFrame {
             Iterator<Float> transCounter = transPercent.iterator();
 
             Iterator<Integer> StrokeWidthCounter = strokeVal.iterator();
-
+            
+            int i = 0;
+            
+            for (String s : texts) {
+                graphSettings.setPaint(Color.black); 
+                graphSettings.drawString(s, points.get(i).x, points.get(i).y);
+                repaint();
+                i++;
+            }
             for (Shape s : shapes) {
 
                 // Sets the shapes transparency value
@@ -201,7 +228,7 @@ public class Drawing extends JFrame {
                         AlphaComposite.SRC_OVER, transCounter.next()));
 
                 // Defines the line width of the stroke
-                graphSettings.setStroke(new BasicStroke(StrokeWidthCounter.next()));
+                graphSettings.setStroke(new BasicStroke(StrokeWidthCounter.next(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                 // Grabs the next stroke from the color arraylist
                 graphSettings.setPaint(strokeCounter.next());
@@ -212,10 +239,12 @@ public class Drawing extends JFrame {
                 graphSettings.setPaint(fillCounter.next());
 
                 graphSettings.fill(s);
+                
+                
             }
 
             // Guide shape used for drawing
-            if (drawStart != null && drawEnd != null && currentAction != PEN && currentAction != ABSORB) {
+            if (drawStart != null && drawEnd != null && currentAction != PEN && currentAction != ABSORB && currentAction != TEXT) {
                         	// Makes the guide shape transparent
 
                 graphSettings.setComposite(AlphaComposite.getInstance(
@@ -233,8 +262,7 @@ public class Drawing extends JFrame {
                     aShape = drawEllipse(drawStart.x, drawStart.y,
                             drawEnd.x, drawEnd.y);
                 } else if (currentAction == RECT) {
-
-                        		// Create a new rectangle using x & y coordinates
+                    // Create a new rectangle using x & y coordinates
                     aShape = drawRectangle(drawStart.x, drawStart.y,
                             drawEnd.x, drawEnd.y);
                 } else if (currentAction == TRIANGLE) {
@@ -244,7 +272,13 @@ public class Drawing extends JFrame {
                 }
 
                 graphSettings.draw(aShape);
+                
             }
+        }
+        
+        protected void drawBigString(Graphics2D g2d) { 
+            g2d.setPaint(Color.black); 
+            g2d.drawString("Java 2D", 250, 215);
         }
 
         private Rectangle2D.Float drawRectangle(
@@ -338,7 +372,7 @@ public class Drawing extends JFrame {
     public Color getPixelColor(int x, int y) throws AWTException {
         Robot robot = new Robot();
         Color color = robot.getPixelColor(x, y);
-
+        
         return color;
     }
 

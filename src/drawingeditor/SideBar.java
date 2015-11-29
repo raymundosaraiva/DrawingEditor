@@ -4,13 +4,10 @@
  */
 package drawingeditor;
 
-import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
@@ -22,14 +19,15 @@ public final class SideBar extends javax.swing.JFrame {
     int currentStrokeWidth;
     int currentTransparency;
     boolean eraser = false;
-    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6;
+    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6, TEXT = 7;
+    
 
     public SideBar() {
         initComponents();
         setLocation(900, 0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newDraw();
-
+        
         // Save th current draw to a png file
         saveMenu.addActionListener((e) -> {
             currentDraw.getImage();
@@ -63,19 +61,14 @@ public final class SideBar extends javax.swing.JFrame {
         blue = new java.awt.Canvas();
         jToolBar1 = new javax.swing.JToolBar();
         lineButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         rectButton = new javax.swing.JButton();
         red = new java.awt.Canvas();
         eraserButton = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        paintButton = new javax.swing.JButton();
         penButton = new javax.swing.JButton();
         absorbButton = new javax.swing.JButton();
         triangleButton = new javax.swing.JButton();
         circleButton = new javax.swing.JButton();
         jb_CaiXaDeTexto = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         green = new java.awt.Canvas();
         black = new java.awt.Canvas();
@@ -87,6 +80,8 @@ public final class SideBar extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         strokeButton = new javax.swing.JButton();
         fillButton = new javax.swing.JButton();
+        canvas2 = new java.awt.Canvas();
+        jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         newMenu = new javax.swing.JMenuItem();
@@ -126,10 +121,6 @@ public final class SideBar extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pen tool.png"))); // NOI18N
-        jButton2.setToolTipText("Caneta");
-
         rectButton.setBackground(new java.awt.Color(255, 255, 255));
         rectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Rectangle tool.png"))); // NOI18N
         rectButton.setToolTipText("Retângulo");
@@ -153,25 +144,6 @@ public final class SideBar extends javax.swing.JFrame {
         eraserButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eraserButtonActionPerformed(evt);
-            }
-        });
-
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jButton5.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Direct selection tool.png"))); // NOI18N
-        jButton5.setToolTipText("Selecionar");
-
-        jButton6.setBackground(new java.awt.Color(255, 255, 255));
-        jButton6.setFont(new java.awt.Font("Lucida Grande", 0, 11)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Crop tool.png"))); // NOI18N
-        jButton6.setToolTipText("Recortar");
-
-        paintButton.setBackground(new java.awt.Color(255, 255, 255));
-        paintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3d material drop tool.png"))); // NOI18N
-        paintButton.setToolTipText("Balde de Tinta");
-        paintButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paintButtonActionPerformed(evt);
             }
         });
 
@@ -220,9 +192,6 @@ public final class SideBar extends javax.swing.JFrame {
                 jb_CaiXaDeTextoActionPerformed(evt);
             }
         });
-
-        jButton14.setToolTipText("");
-        jButton14.setEnabled(false);
 
         green.setBackground(new java.awt.Color(0, 255, 0));
         green.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -288,6 +257,13 @@ public final class SideBar extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setToolTipText("Digite o Texto");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+
         jMenu1.setText("Arquivo");
 
         newMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -343,10 +319,13 @@ public final class SideBar extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(penButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lineButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -355,29 +334,20 @@ public final class SideBar extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(rectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(triangleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(triangleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(paintButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(circleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(circleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jb_CaiXaDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(absorbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(eraserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(eraserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jb_CaiXaDeTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(absorbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stroke, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(transparency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -395,15 +365,14 @@ public final class SideBar extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(black, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(white, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(stroke, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(transparency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 19, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(white, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -419,23 +388,15 @@ public final class SideBar extends javax.swing.JFrame {
                     .addComponent(penButton))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6)
-                            .addComponent(jButton5))
-                        .addComponent(paintButton, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(lineButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(eraserButton)
-                            .addComponent(jb_CaiXaDeTexto)))
-                    .addComponent(absorbButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lineButton)
+                    .addComponent(jb_CaiXaDeTexto)
+                    .addComponent(absorbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eraserButton))
                 .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(stroke, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(transparency, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -455,9 +416,11 @@ public final class SideBar extends javax.swing.JFrame {
                     .addComponent(black, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(yellow, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(65, 65, 65)
-                .addComponent(jButton14)
-                .addGap(22, 22, 22))
+                .addComponent(canvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
+
+        jTextField1.getAccessibleContext().setAccessibleName("");
 
         pack();
         setLocationRelativeTo(null);
@@ -555,42 +518,18 @@ public final class SideBar extends javax.swing.JFrame {
         newDraw();
     }//GEN-LAST:event_newMenuActionPerformed
 
-    private void paintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paintButtonActionPerformed
-
-
-    }//GEN-LAST:event_paintButtonActionPerformed
-
     private void absorbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_absorbButtonActionPerformed
-        setAction(ABSORB);
-        Color color;
-        try {
-            if (currentDraw != null) {
-                color = currentDraw.getPixelColor(200, 200);
-                setColor(color, color);
-            }
-        } catch (AWTException ex) {
-            Logger.getLogger(SideBar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        setAction(ABSORB); 
     }//GEN-LAST:event_absorbButtonActionPerformed
 
     private void jb_CaiXaDeTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_CaiXaDeTextoActionPerformed
-        // Cria formulario
-        JFrame formulario = new JFrame("DA - JTextArea");
-
-        formulario.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Cria nova instancia da classe
-        Texto texto = new Texto();
-
-        // adiciona painel ao formulario
-        formulario.setContentPane(texto.CriaPainel());
-
-        // Compacta componetes no formulario
-        formulario.pack();
-
-        // Mostra formulario
-        formulario.setVisible(true);
+       setAction(TEXT);
+       jTextField1.setVisible(true);
     }//GEN-LAST:event_jb_CaiXaDeTextoActionPerformed
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        currentDraw.setText(jTextField1.getText());
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments
@@ -631,15 +570,12 @@ public final class SideBar extends javax.swing.JFrame {
     private java.awt.Canvas black;
     private java.awt.Canvas blue;
     private java.awt.Canvas canvas1;
+    private java.awt.Canvas canvas2;
     private javax.swing.JButton circleButton;
     private javax.swing.JMenuItem clearMenu;
     private javax.swing.JButton eraserButton;
     private javax.swing.JButton fillButton;
     private java.awt.Canvas green;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -648,12 +584,12 @@ public final class SideBar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton jb_CaiXaDeTexto;
     private javax.swing.JButton lineButton;
     private javax.swing.JMenuItem newMenu;
     private javax.swing.JMenuItem openMenu;
-    private javax.swing.JButton paintButton;
     private javax.swing.JButton penButton;
     private javax.swing.JButton rectButton;
     private java.awt.Canvas red;
@@ -697,6 +633,12 @@ public final class SideBar extends javax.swing.JFrame {
     private void setAction(int ACTION) {
         if (currentDraw != null) {
             currentDraw.currentAction = ACTION;
+
+            strokeButton.setBackground(currentDraw.strokeColor);
+            fillButton.setBackground(currentDraw.fillColor);
+        }
+        if(ACTION != TEXT){
+            jTextField1.setVisible(false);
         }
     }
 
