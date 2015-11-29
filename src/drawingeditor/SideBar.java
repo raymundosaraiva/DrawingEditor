@@ -5,10 +5,13 @@
 
 package drawingeditor;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 
@@ -21,37 +24,7 @@ public class SideBar extends javax.swing.JFrame {
     int currentStrokeWidth;
     int currentTransparency;
     boolean eraser = false;
-    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5;
-    
-    public void newDraw(){
-        Drawing draw = new Drawing();
-        int index = drawList.size();
-        draw.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                currentDraw = draw;
-                System.out.println("Focus gained in JPanel");
-            }
-        });
-        
-        draw.setTitle("Sem Título "+(index+1));
-        
-        //Add new draw to the menu Janela
-        //windowMenu.add(new JCheckBoxMenuItem(draw.getTitle()));
-        
-        draw.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        draw.addWindowListener( new WindowAdapter() {
-                    public void windowClosing(WindowEvent we) {
-                        //Remove
-                        drawList.remove(index);
-                        //remove draw to the menu Janela
-                        //
-                        draw.dispose();
-                    }
-                } );
-        drawList.add(draw);
-        
-    }
+    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6;
     
     public SideBar() {
         initComponents();
@@ -59,14 +32,21 @@ public class SideBar extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newDraw();
         
-        
+        // Save th current draw to a png file
         saveMenu.addActionListener((e) -> {
             currentDraw.getImage();
         });
         
+        // Open a new image from file
         openMenu.addActionListener((e) -> {
             if (e != null) {
                 currentDraw.open();
+            }
+        });
+        
+        clearMenu.addActionListener((e) -> {
+            if (e != null) {
+                currentDraw.clear();
             }
         });
     }
@@ -89,9 +69,9 @@ public class SideBar extends javax.swing.JFrame {
         eraserButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        paintButton = new javax.swing.JButton();
         penButton = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        absorbButton = new javax.swing.JButton();
         triangleButton = new javax.swing.JButton();
         circleButton = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -183,9 +163,14 @@ public class SideBar extends javax.swing.JFrame {
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Crop tool.png"))); // NOI18N
         jButton6.setToolTipText("Recortar");
 
-        jButton7.setBackground(new java.awt.Color(255, 255, 255));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3d material drop tool.png"))); // NOI18N
-        jButton7.setToolTipText("Balde de Tinta");
+        paintButton.setBackground(new java.awt.Color(255, 255, 255));
+        paintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/3d material drop tool.png"))); // NOI18N
+        paintButton.setToolTipText("Balde de Tinta");
+        paintButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paintButtonActionPerformed(evt);
+            }
+        });
 
         penButton.setBackground(new java.awt.Color(255, 255, 255));
         penButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Brush tool.png"))); // NOI18N
@@ -196,9 +181,14 @@ public class SideBar extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(255, 255, 255));
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eyedropper.png"))); // NOI18N
-        jButton9.setToolTipText("Absorver Cor");
+        absorbButton.setBackground(new java.awt.Color(255, 255, 255));
+        absorbButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eyedropper.png"))); // NOI18N
+        absorbButton.setToolTipText("Absorver Cor");
+        absorbButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                absorbButtonActionPerformed(evt);
+            }
+        });
 
         triangleButton.setBackground(new java.awt.Color(255, 255, 255));
         triangleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sharpen tool.png"))); // NOI18N
@@ -361,7 +351,7 @@ public class SideBar extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(paintButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(circleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -371,7 +361,7 @@ public class SideBar extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(absorbButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
@@ -425,7 +415,7 @@ public class SideBar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton6)
                             .addComponent(jButton5))
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(paintButton, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(lineButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +424,7 @@ public class SideBar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(eraserButton)
                             .addComponent(jButton12)))
-                    .addComponent(jButton9))
+                    .addComponent(absorbButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -550,6 +540,22 @@ public class SideBar extends javax.swing.JFrame {
        newDraw();
     }//GEN-LAST:event_newMenuActionPerformed
 
+    private void paintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paintButtonActionPerformed
+
+           
+    }//GEN-LAST:event_paintButtonActionPerformed
+
+    private void absorbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_absorbButtonActionPerformed
+       setAction(ABSORB);
+        Color color;
+        try {
+            color = currentDraw.getPixelColor(200,200);
+            setColor(color, color);
+        } catch (AWTException ex) {
+            Logger.getLogger(SideBar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_absorbButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -588,6 +594,7 @@ public class SideBar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton absorbButton;
     private java.awt.Canvas black;
     private java.awt.Canvas blue;
     private java.awt.Canvas canvas1;
@@ -601,8 +608,6 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -613,6 +618,7 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JButton lineButton;
     private javax.swing.JMenuItem newMenu;
     private javax.swing.JMenuItem openMenu;
+    private javax.swing.JButton paintButton;
     private javax.swing.JButton penButton;
     private javax.swing.JButton rectButton;
     private java.awt.Canvas red;
@@ -625,7 +631,8 @@ public class SideBar extends javax.swing.JFrame {
     private javax.swing.JMenu windowMenu;
     private java.awt.Canvas yellow;
     // End of variables declaration//GEN-END:variables
-
+    
+    // Set the color in the draw
     public void setColor(Color stroke, Color fill){
         currentDraw.strokeColor = stroke;
         currentDraw.fillColor = fill;
@@ -633,11 +640,13 @@ public class SideBar extends javax.swing.JFrame {
         fillButton.setBackground(fill);
     }
     
+    // Get the Color from the draw
     public Color[] getColor(){
         Color colors[] = {currentDraw.strokeColor, currentDraw.fillColor};
         return colors;
     }
     
+    // Get the current color, stroke and transparency, before Eraser was called
     public void currentColor(){
         if(eraser){
            setColor(currentColors[0],currentColors[1]);
@@ -646,8 +655,43 @@ public class SideBar extends javax.swing.JFrame {
            eraser = false;
         }
     }
-
+    
+    // Set the current action selected
     private void setAction(int ACTION) {
         currentDraw.currentAction = ACTION;
     }
+    
+     // Method to create new Drawing windows
+    public void newDraw(){
+        Drawing draw = new Drawing();
+        int index = drawList.size();
+        
+        // A listener to indicate whitch window has the focus, so they can be treated as separated 
+        draw.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                currentDraw = draw;
+                System.out.println("Focus gained in JPanel");
+            }
+        });
+        
+        draw.setTitle("Sem Título "+(index+1)); // Add a untitled name to each new window
+        
+        //Add new draw to menu Janela
+        //windowMenu.add(new JCheckBoxMenuItem(draw.getTitle()));
+        
+        draw.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        draw.addWindowListener( new WindowAdapter() {
+                    public void windowClosing(WindowEvent we) {
+                        //Remove
+                        drawList.remove(index);
+                        //remove draw from menu Janela
+                        draw.dispose();
+                    }
+                } );
+        // Add new draw to the list
+        drawList.add(draw);
+        
+    }
+    
 }

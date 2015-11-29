@@ -133,7 +133,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jButton6" min="-2" pref="48" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButton7" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="paintButton" min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -147,7 +147,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton12" min="-2" pref="48" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton9" min="-2" pref="48" max="-2" attributes="0"/>
+                              <Component id="absorbButton" min="-2" pref="48" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton2" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
@@ -222,7 +222,7 @@
                           <Component id="jButton6" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton5" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton7" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="paintButton" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="lineButton" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -235,7 +235,7 @@
                           <Component id="jButton12" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                  <Component id="absorbButton" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
@@ -385,7 +385,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Recortar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton7">
+    <Component class="javax.swing.JButton" name="paintButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -395,6 +395,9 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Balde de Tinta"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paintButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="penButton">
       <Properties>
@@ -410,7 +413,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="penButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton9">
+    <Component class="javax.swing.JButton" name="absorbButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -420,6 +423,9 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Absorver Cor"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="absorbButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="triangleButton">
       <Properties>

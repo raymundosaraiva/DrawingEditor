@@ -16,13 +16,21 @@ import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.*;
 import javax.imageio.ImageIO;
+import java.awt.Color;
+import java.awt.Robot;
+import java.awt.AWTException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
 public class Drawing extends JFrame
 {
-    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5;
+    public static final int PEN = 1, LINE = 2, CIRCLE = 3, RECT = 4, TRIANGLE = 5, ABSORB = 6;
     
+    // Know if this draw's been used (has the focus)
     boolean focus = false;
+    
+     Point mouseClick;
     
     // Makes sure the float for transparency only shows 2 digits
     DecimalFormat dec = new DecimalFormat("#.##");
@@ -80,23 +88,31 @@ public class Drawing extends JFrame
                             public void mousePressed(MouseEvent e)
                             {
                             	
-                            	if(currentAction != PEN){
-                            	// When the mouse is pressed get x & y position
-                            	drawStart = new Point(e.getX(), e.getY());
-                            	drawEnd = drawStart;
-                                repaint();
-                                
-                            	} else{
+                            	if(currentAction == PEN){
                                     drawStart = new Point(e.getX(), e.getY());
+
+                            	}else if(currentAction == ABSORB){
+                                    mouseClick = new Point(e.getX(), e.getY());
+                                        try {
+                                            Color color = getPixelColor(mouseClick.x, mouseClick.y);
+                                            fillColor = strokeColor = color;
+                                        } catch (AWTException ex) {
+                                            Logger.getLogger(Drawing.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    
+                                } else{
+                                    // When the mouse is pressed get x & y position
+                                    drawStart = new Point(e.getX(), e.getY());
+                                    drawEnd = drawStart;
+                                    repaint();
                                 }
-                            	
                                 
                             }
 
                             public void mouseReleased(MouseEvent e)
                             {
                             	
-                            if(currentAction != PEN){
+                            if(currentAction != PEN && currentAction != ABSORB){
                             	
                             	  // Create a shape using the starting x & y
                             	  // and finishing x & y positions
@@ -220,7 +236,7 @@ public class Drawing extends JFrame
                         }
 
                         // Guide shape used for drawing
-                        if (drawStart != null && drawEnd != null  && currentAction != PEN)
+                        if (drawStart != null && drawEnd != null  && currentAction != PEN && currentAction != ABSORB)
                         {
                         	// Makes the guide shape transparent
                             
@@ -330,7 +346,7 @@ public class Drawing extends JFrame
     public void open(){
         JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setVisible(true);
-                int returnValue = fileChooser.showOpenDialog(null);
+                //int returnValue = fileChooser.showOpenDialog(null);
                 File f = fileChooser.getSelectedFile();
                 try {
                     Image image = ImageIO.read(f);
@@ -347,6 +363,18 @@ public class Drawing extends JFrame
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Erro. Arquivo não contém uma imagem!");
                 }
+    }
+    
+    public void clear(){
+       
+    }
+    
+    public Color getPixelColor(int x, int y) throws AWTException{
+
+        Robot robot = new Robot();
+        Color color = robot.getPixelColor(x, y);
+ 
+        return color;
     }
            
 }
