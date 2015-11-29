@@ -43,8 +43,9 @@ class Texto {
         botao.addActionListener((ActionListener)botao.getAction()); // Deveria ser botao.addActionListener(this); mas não aceita
              
         // Adiciona valores as propriedades da area de texto
-        area.setFont(new Font("Serif", Font.ITALIC, 15));
+        area.setFont(new Font("Serif", Font.ITALIC, 15)); 
         area.setLineWrap(true);
+        
         area.setWrapStyleWord(true);
          
         // Cria barra de rolagem e adiciona a area de texto
