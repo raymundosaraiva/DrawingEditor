@@ -1,2 +1,2 @@
 # Drawing Editor
-Desenvolvimento de um aplicativo editor de desenho para a cadeira de Computação grafica.
+Desenvolvimento de um aplicativo de desenho simples em Java (Paint like).
